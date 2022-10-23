@@ -8,7 +8,7 @@ local subdirs=($1/*)
 local subdir_count=${#subdirs[@]}
 local c=$2
 for counter in ${!subdirs[@]}; do 
-	for ((i=1; i<c; i++)); do
+	for ((i=0; i<c; i++)); do
 		echo -n "│   "
 	done
 
