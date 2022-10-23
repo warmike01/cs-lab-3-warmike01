@@ -7,11 +7,18 @@ function print()
 local subdirs=($1/*)
 local subdir_count=${#subdirs[@]}
 local c=$2
+local flag=$3
 for counter in ${!subdirs[@]}; do 
-	for ((i=0; i<c; i++)); do
-		echo -n "│   "
-	done
-	
+	if [ $flag -eq 0 ]
+	then
+		for ((i=0; i<c; i++)); do
+			echo -n "│   "
+		done
+	else
+	for ((i=1; i<c; i++)); do
+			echo -n "│   "
+		done
+	fi
 	if [ $counter -eq $(($subdir_count-1)) ]
 		then
 		echo -n "└── "
@@ -22,7 +29,12 @@ for counter in ${!subdirs[@]}; do
 	if [ -d ${subdirs[$counter]} ]
 	then 
 		((d++))
-		print ${subdirs[$counter]} $(($c+1))
+		if [ $counter -eq $(($subdir_count-1)) ]
+		then
+			print ${subdirs[$counter]} $(($c+1)) 1
+		else
+			print ${subdirs[$counter]} $(($c+1)) 0
+		fi
 	elif [ -f ${subdirs[$counter]} ]
 	then
 		((f++))
@@ -33,10 +45,10 @@ done
 if [ -z "$1" ]
 then
 	echo '.'
-	print '.' 0
+	print '.' 0 0
 else
 	echo $1
-	print $1 0
+	print $1 0 0
 fi
 printf '\n'
 echo -n $d
