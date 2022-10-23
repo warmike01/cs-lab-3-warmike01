@@ -21,7 +21,12 @@ for counter in ${!subdirs[@]}; do
 	elif [ -f ${subdirs[$counter]} ]
 	then
 		((f++))
+		if [ $counter -eq $(($subdir_count-1)) ]
+		then
+		echo -n "└── "
+		else
 		echo -n "├── "
+		fi
 		echo ${subdirs[$counter]##*/}
 		
 	fi
