@@ -5,12 +5,24 @@ function print()
 {
 local subdirs=($1/*)
 local subdir_count=${#subdirs[@]}
+local c=$2
 for counter in ${!subdirs[@]}; do 
-	echo ${subdirs[$counter]##*/}
+	for ((i=1; i<c; i++)); do
+		echo -n "│   "
+	done
+
 	if [ -d ${subdirs[$counter]} ]
-	then print ${subdirs[$counter]}
+	then 
+		echo -n "├── "
+		
+		echo ${subdirs[$counter]##*/}
+		print ${subdirs[$counter]} $(($c+1))
+	elif [ -f ${subdirs[$counter]} ]
+	then
+		echo -n "└── "
+		echo ${subdirs[$counter]##*/}
 	fi
 done
 }
 
-print $1
+print $1 0
