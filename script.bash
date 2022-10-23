@@ -9,26 +9,23 @@ local subdir_count=${#subdirs[@]}
 local c=$2
 for counter in ${!subdirs[@]}; do 
 	for ((i=0; i<c; i++)); do
-		echo -n "│   "
+		echo -n "│   "
 	done
-
-	if [ -d ${subdirs[$counter]} ]
-	then 
-		((d++))
-		echo -n "├── "
-		echo ${subdirs[$counter]##*/}
-		print ${subdirs[$counter]} $(($c+1))
-	elif [ -f ${subdirs[$counter]} ]
-	then
-		((f++))
-		if [ $counter -eq $(($subdir_count-1)) ]
+	
+	if [ $counter -eq $(($subdir_count-1)) ]
 		then
 		echo -n "└── "
 		else
 		echo -n "├── "
 		fi
-		echo ${subdirs[$counter]##*/}
-		
+	echo ${subdirs[$counter]##*/}
+	if [ -d ${subdirs[$counter]} ]
+	then 
+		((d++))
+		print ${subdirs[$counter]} $(($c+1))
+	elif [ -f ${subdirs[$counter]} ]
+	then
+		((f++))
 	fi
 done
 }
