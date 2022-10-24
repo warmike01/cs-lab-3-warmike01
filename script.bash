@@ -18,6 +18,7 @@ for counter in ${!subdirs[@]}; do
 	for ((i=1; i<c; i++)); do
 			echo -n "│   "
 		done
+	echo -n "    "
 	fi
 	if [ $counter -eq $(($subdir_count-1)) ]
 		then
